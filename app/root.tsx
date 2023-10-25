@@ -9,6 +9,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
+import Navbar from '~/components/Navbar';
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
@@ -25,6 +26,10 @@ export default function App() {
         <Links />
       </head>
       <body>
+        {/*NAVBAR*/}
+        <header className={'container mx-auto py-4'}>
+          <Navbar />
+        </header>
         <Outlet />
         <ScrollRestoration />
         <Scripts />
