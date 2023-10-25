@@ -26,11 +26,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        {/*NAVBAR*/}
         <header className={'container mx-auto py-4'}>
           <Navbar />
         </header>
-        <Outlet />
+        <main className={'container mx-auto'}>
+          <Outlet />
+        </main>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
