@@ -2,6 +2,8 @@ import {Pool} from 'pg';
 import {Kysely, PostgresDialect} from 'kysely';
 import type {DB} from 'kysely-codegen';
 
+if (!process.env) throw new Error('process.env is not set');
+
 const dialect = new PostgresDialect({
   pool: new Pool({
     database: process.env.DATABASE_NAME,
