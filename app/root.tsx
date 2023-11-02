@@ -26,10 +26,10 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <header className={'container mx-auto py-4'}>
+        <header className={'container mx-auto py-4 fixed'}>
           <Navbar />
         </header>
-        <main className={'container mx-auto'}>
+        <main>
           <Outlet />
         </main>
         <ScrollRestoration />

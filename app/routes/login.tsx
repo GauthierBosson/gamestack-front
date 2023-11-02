@@ -1,3 +1,7 @@
 export default function Login() {
-    return <h1>Login page</h1>
+  return (
+    <section className={'container mx-auto'}>
+      <h1>Login</h1>
+    </section>
+  );
 }

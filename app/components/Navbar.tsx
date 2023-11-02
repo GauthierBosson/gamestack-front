@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <nav
       className={
-        'p-4 rounded-[25px] w-full shadow-md flex items-center justify-between'
+        'p-4 rounded-[25px] w-full shadow-md flex items-center justify-between bg-white'
       }>
       <div>GameStack</div>
       <ul className={'flex items-center gap-4'}>

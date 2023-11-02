@@ -10,8 +10,8 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div>
+    <section className={'container mx-auto'}>
       <Link to="/login">Go to Login</Link>
-    </div>
+    </section>
   );
 }
