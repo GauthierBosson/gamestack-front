@@ -10,6 +10,8 @@ import {
 } from '~/components/ui/table';
 import {Link} from '@remix-run/react';
 import {ArrowUpRightSquare} from 'lucide-react';
+import type {LoaderFunctionArgs} from '@remix-run/node';
+import {authenticator} from '~/services/auth.server';
 
 export default function Dashboard() {
   return (
@@ -84,4 +86,10 @@ export default function Dashboard() {
       </Tabs>
     </section>
   );
+}
+
+export async function loader({request}: LoaderFunctionArgs) {
+  return await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  });
 }

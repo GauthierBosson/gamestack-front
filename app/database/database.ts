@@ -1,6 +1,8 @@
-import {Pool} from 'pg';
 import {Kysely, PostgresDialect} from 'kysely';
 import type {DB} from 'kysely-codegen';
+import pkg from 'pg';
+
+const {Pool} = pkg;
 
 if (!process.env) throw new Error('process.env is not set');
 
