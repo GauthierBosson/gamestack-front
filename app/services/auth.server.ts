@@ -3,6 +3,7 @@ import type {User} from '~/services/session.server';
 import {sessionStorage} from '~/services/session.server';
 import {FormStrategy} from 'remix-auth-form';
 import {db} from '~/database/database';
+import * as bcrypt from 'bcrypt';
 
 export const authenticator = new Authenticator<User | Error>(sessionStorage);
 
@@ -31,7 +32,12 @@ authenticator.use(
 
     if (!user) throw new AuthorizationError('Bad Credentials: User not found');
 
-    // TODO: Implement password hashing
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch)
+      throw new AuthorizationError(
+        'Bad Credentials: Email or password does not match',
+      );
 
     return {
       email: user.email,
