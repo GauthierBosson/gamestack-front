@@ -1,6 +1,12 @@
 import {Avatar, AvatarFallback, AvatarImage} from '~/components/ui/avatar';
+import {useRouteLoaderData} from '@remix-run/react';
+import type {loader} from '~/root';
+import type {SerializeFrom} from '@remix-run/node';
+import {Button} from '~/components/ui/button';
 
 export default function Navbar() {
+  const {user} = useRouteLoaderData('root') as SerializeFrom<typeof loader>;
+
   return (
     <nav
       className={
@@ -15,6 +21,13 @@ export default function Navbar() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </li>
+        {user && (
+          <li>
+            <Button asChild>
+              <a href="/logout">Logout</a>
+            </Button>
+          </li>
+        )}
       </ul>
     </nav>
   );
