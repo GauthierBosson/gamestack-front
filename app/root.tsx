@@ -1,6 +1,7 @@
 import styles from './tailwind.css';
 import {cssBundleHref} from '@remix-run/css-bundle';
-import type {LinksFunction} from '@remix-run/node';
+import type {LinksFunction, LoaderFunctionArgs} from '@remix-run/node';
+import {json} from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -10,6 +11,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 import Navbar from '~/components/Navbar';
+import {authenticator} from '~/services/auth.server';
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
@@ -38,4 +40,18 @@ export default function App() {
       </body>
     </html>
   );
+}
+
+export async function loader({request}: LoaderFunctionArgs) {
+  let user = await authenticator.isAuthenticated(request);
+
+  if (user instanceof Error) {
+    return json({user: null});
+  }
+
+  if (!user) {
+    return json({user: null});
+  }
+
+  return json({user});
 }
