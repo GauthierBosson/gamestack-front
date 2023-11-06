@@ -28,7 +28,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <header className={'container mx-auto py-4 fixed inset-0'}>
+        <header className={'container mx-auto py-4 fixed top-0 left-0 right-0'}>
           <Navbar />
         </header>
         <main>
