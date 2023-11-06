@@ -15,18 +15,25 @@ export default function Navbar() {
       <div>GameStack</div>
       <ul className={'flex items-center gap-4'}>
         <li>News</li>
-        <li>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </li>
+        {!user && (
+          <Button asChild>
+            <a href="/login">Login</a>
+          </Button>
+        )}
         {user && (
-          <li>
-            <Button asChild>
-              <a href="/logout">Logout</a>
-            </Button>
-          </li>
+          <>
+            <li>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </li>
+            <li>
+              <Button asChild>
+                <a href="/logout">Logout</a>
+              </Button>
+            </li>
+          </>
         )}
       </ul>
     </nav>
