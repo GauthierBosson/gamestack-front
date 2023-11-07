@@ -15,7 +15,7 @@ import {authenticator} from '~/services/auth.server';
 
 export default function Dashboard() {
   return (
-    <section className={'container mx-auto'}>
+    <section className={'container mx-auto mt-[100px]'}>
       {/* TABLEAU DE JEUX */}
       <Tabs
         defaultValue="all"
