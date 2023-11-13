@@ -1,4 +1,5 @@
 import {createCookieSessionStorage} from '@remix-run/node';
+import {createThemeSessionResolver} from 'remix-themes';
 import type {Users} from 'kysely-codegen';
 import * as bcrypt from 'bcrypt';
 import {db} from '~/database/database';
@@ -49,3 +50,5 @@ export const sessionStorage = createCookieSessionStorage({
 export type User = Pick<Users, 'username' | 'email'>;
 
 export const {getSession, commitSession, destroySession} = sessionStorage;
+
+export const themeSessionResolver = createThemeSessionResolver(sessionStorage);

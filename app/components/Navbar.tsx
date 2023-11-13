@@ -3,6 +3,7 @@ import {useRouteLoaderData} from '@remix-run/react';
 import type {loader} from '~/root';
 import type {SerializeFrom} from '@remix-run/node';
 import {Button} from '~/components/ui/button';
+import {ThemeToggle} from '~/components/theme-toggle';
 
 export default function Navbar() {
   const {user} = useRouteLoaderData('root') as SerializeFrom<typeof loader>;
@@ -10,7 +11,7 @@ export default function Navbar() {
   return (
     <nav
       className={
-        'p-4 rounded-[25px] w-full shadow-md flex items-center justify-between bg-white'
+        'p-4 rounded-[25px] w-full shadow-md flex items-center justify-between bg-background border'
       }>
       <div>GameStack</div>
       <ul className={'flex items-center gap-4'}>
@@ -35,6 +36,9 @@ export default function Navbar() {
             </li>
           </>
         )}
+        <li>
+          <ThemeToggle />
+        </li>
       </ul>
     </nav>
   );
