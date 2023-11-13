@@ -57,7 +57,8 @@ export function App() {
         <Links />
       </head>
       <body>
-        <header className={'container mx-auto py-4 fixed top-0 left-0 right-0'}>
+        <header
+          className={'container mx-auto py-4 sticky top-0 left-0 right-0 z-10'}>
           <Navbar />
         </header>
         <main>

@@ -22,6 +22,7 @@ export async function loader({request}: LoaderFunctionArgs) {
 
   const gameData: Game[] = [
     {
+      id: '1',
       picture: '/judgment_cover.jpg',
       name: 'Judgment',
       status: 'doing',
@@ -30,6 +31,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 8,
     },
     {
+      id: '2',
       picture: '/judgment_cover.jpg',
       name: 'Lost Judgment',
       status: 'to do',
@@ -38,6 +40,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: '/',
     },
     {
+      id: '3',
       picture: '/judgment_cover.jpg',
       name: 'One Piece truc machin',
       status: 'dropped',
@@ -46,6 +49,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 2,
     },
     {
+      id: '4',
       picture: '/judgment_cover.jpg',
       name: 'Street Fighter 6',
       status: 'doing',
@@ -54,6 +58,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 10,
     },
     {
+      id: '5',
       picture: '/judgment_cover.jpg',
       name: 'Diablo 4',
       status: 'done',
@@ -62,6 +67,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 7,
     },
     {
+      id: '6',
       picture: '/judgment_cover.jpg',
       name: 'Judgment',
       status: 'doing',
@@ -70,6 +76,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 8,
     },
     {
+      id: '7',
       picture: '/judgment_cover.jpg',
       name: 'Lost Judgment',
       status: 'to do',
@@ -78,6 +85,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: '/',
     },
     {
+      id: '8',
       picture: '/judgment_cover.jpg',
       name: 'One Piece truc machin',
       status: 'dropped',
@@ -86,6 +94,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 2,
     },
     {
+      id: '9',
       picture: '/judgment_cover.jpg',
       name: 'Street Fighter 6',
       status: 'doing',
@@ -94,6 +103,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 10,
     },
     {
+      id: '10',
       picture: '/judgment_cover.jpg',
       name: 'Diablo 4',
       status: 'done',
@@ -102,6 +112,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 7,
     },
     {
+      id: '11',
       picture: '/judgment_cover.jpg',
       name: 'Judgment',
       status: 'doing',
@@ -110,6 +121,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 8,
     },
     {
+      id: '12',
       picture: '/judgment_cover.jpg',
       name: 'Lost Judgment',
       status: 'to do',
@@ -118,6 +130,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: '/',
     },
     {
+      id: '13',
       picture: '/judgment_cover.jpg',
       name: 'One Piece truc machin',
       status: 'dropped',
@@ -126,6 +139,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 2,
     },
     {
+      id: '14',
       picture: '/judgment_cover.jpg',
       name: 'Street Fighter 6',
       status: 'doing',
@@ -134,6 +148,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       score: 10,
     },
     {
+      id: '15',
       picture: '/judgment_cover.jpg',
       name: 'Diablo 4',
       status: 'done',
