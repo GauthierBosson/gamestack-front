@@ -29,6 +29,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PC',
       score: 8,
+      slug: '1',
     },
     {
       id: '2',
@@ -38,6 +39,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PC',
       score: '/',
+      slug: '1',
     },
     {
       id: '3',
@@ -47,6 +49,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PS5',
       score: 2,
+      slug: '1',
     },
     {
       id: '4',
@@ -56,6 +59,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'VS Fighting',
       platform: 'PC',
       score: 10,
+      slug: '1',
     },
     {
       id: '5',
@@ -65,6 +69,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'RPG',
       platform: 'PC',
       score: 7,
+      slug: '1',
     },
     {
       id: '6',
@@ -74,6 +79,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PC',
       score: 8,
+      slug: '1',
     },
     {
       id: '7',
@@ -83,6 +89,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PC',
       score: '/',
+      slug: '1',
     },
     {
       id: '8',
@@ -92,6 +99,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PS5',
       score: 2,
+      slug: '1',
     },
     {
       id: '9',
@@ -101,6 +109,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'VS Fighting',
       platform: 'PC',
       score: 10,
+      slug: '1',
     },
     {
       id: '10',
@@ -110,6 +119,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'RPG',
       platform: 'PC',
       score: 7,
+      slug: '1',
     },
     {
       id: '11',
@@ -119,6 +129,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PC',
       score: 8,
+      slug: '1',
     },
     {
       id: '12',
@@ -128,6 +139,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PC',
       score: '/',
+      slug: '1',
     },
     {
       id: '13',
@@ -137,6 +149,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'action',
       platform: 'PS5',
       score: 2,
+      slug: '1',
     },
     {
       id: '14',
@@ -146,6 +159,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'VS Fighting',
       platform: 'PC',
       score: 10,
+      slug: '1',
     },
     {
       id: '15',
@@ -155,6 +169,7 @@ export async function loader({request}: LoaderFunctionArgs) {
       type: 'RPG',
       platform: 'PC',
       score: 7,
+      slug: '1',
     },
   ];
 

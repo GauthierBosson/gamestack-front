@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import {Button} from '~/components/ui/button';
-import {ArrowUpDown, MoreHorizontal} from 'lucide-react';
+import {ArrowUpDown, ArrowUpRightSquare, MoreHorizontal} from 'lucide-react';
 import {Checkbox} from '~/components/ui/checkbox';
 
 export type Game = {
@@ -19,6 +19,7 @@ export type Game = {
   type: string;
   platform: string;
   score: number | '/';
+  slug: string;
 };
 
 export const columns: ColumnDef<Game>[] = [
@@ -43,6 +44,14 @@ export const columns: ColumnDef<Game>[] = [
         </Button>
       );
     },
+    cell: ({row}) => (
+      <div className={'flex items-center gap-2'}>
+        <span>{row.original.name}</span>
+        <a href={`/games/${row.original.slug}`}>
+          <ArrowUpRightSquare className={'w-[14px]'} />
+        </a>
+      </div>
+    ),
   },
   {
     accessorKey: 'status',
