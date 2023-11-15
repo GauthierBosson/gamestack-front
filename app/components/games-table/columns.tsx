@@ -4,7 +4,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import {Button} from '~/components/ui/button';
@@ -23,6 +22,9 @@ export type Game = {
 };
 
 export const columns: ColumnDef<Game>[] = [
+  {
+    accessorKey: 'id',
+  },
   {
     accessorKey: 'picture',
     header: 'Picture',
@@ -71,7 +73,7 @@ export const columns: ColumnDef<Game>[] = [
   },
   {
     id: 'actions',
-    cell: ({row}) => {
+    cell: ({row, table}) => {
       const game = row.original;
 
       return (
@@ -88,9 +90,16 @@ export const columns: ColumnDef<Game>[] = [
               onClick={() => navigator.clipboard.writeText(game.id)}>
               Copy game ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                table.options.meta?.removeSingleRow(row.id, game.id)
+              }>
+              Delete
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => table.options.meta?.editRow(row.id)}>
+              Edit
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

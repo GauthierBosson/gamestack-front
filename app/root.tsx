@@ -11,7 +11,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
-import Navbar from '~/components/Navbar';
+import Navbar from '~/components/navbar';
 import {authenticator} from '~/services/auth.server';
 import {themeSessionResolver} from '~/services/session.server';
 import {PreventFlashOnWrongTheme, ThemeProvider, useTheme} from 'remix-themes';
@@ -61,7 +61,7 @@ export function App() {
           className={'container mx-auto py-4 sticky top-0 left-0 right-0 z-10'}>
           <Navbar />
         </header>
-        <main>
+        <main className={'mt-[-106px]'}>
           <Outlet />
         </main>
         <ScrollRestoration />
