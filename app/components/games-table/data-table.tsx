@@ -25,11 +25,12 @@ import {Input} from '~/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import Dialog from '~/components/dialog';
 import type {RowData} from '@tanstack/table-core';
+import {useToast} from '~/components/ui/use-toast';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,17 +40,33 @@ interface DataTableProps<TData, TValue> {
 declare module '@tanstack/react-table' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface TableMeta<TData extends RowData> {
-    editRow: (rowIndex: string) => void;
-    removeSingleRow: (rowIndex: string, gameId: string) => void;
-    removeSelectedRows: (rowsIndexes: string[], gamesIndexes: string[]) => void;
+    currentData: TData[];
+    untouchedData: TData[];
+    updateSingleColumn: (
+      rowIndex: number,
+      columnId: string,
+      value: string,
+    ) => void;
+    saveSingleRow: (rowIndex: number) => void;
+    saveAllRows: () => void;
+    removeSingleRow: (rowIndex: string, dataId: string) => void;
+    removeSelectedRows: (rowsIndexes: string[], dataIndexes: string[]) => void;
   }
 }
 
+//TODO: Add database interaction for all functions
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  /**
+   * This is a clean copy of what we get from the database, it is always in sync with the database
+   * With this state we can reset the table to its original state if the user doesn't confirm the changes
+   * When the user confirm the changes, we update the data state with the currentData state
+   */
+  const [untouchedData, setUntouchedData] = useState<TData[]>(data);
   const [currentData, setCurrentData] = useState<TData[]>(data);
+  const {toast} = useToast();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -71,18 +88,52 @@ export function DataTable<TData, TValue>({
       },
     },
     meta: {
-      editRow: (rowIndex: string) => {
-        return;
+      currentData,
+      untouchedData,
+      updateSingleColumn: (rowIndex, columnId, value) => {
+        setCurrentData((prev) =>
+          prev.map((row, index) => {
+            if (index === rowIndex) {
+              return {
+                ...prev[rowIndex]!,
+                [columnId]: value,
+              };
+            }
+            return row;
+          }),
+        );
       },
-      removeSingleRow: (rowIndex, gameId) => {
-        //TODO: remove from DB and then from table
+      saveSingleRow: (rowIndex) => {
+        setUntouchedData((prev) =>
+          prev.map((row, index) => {
+            if (index === rowIndex) {
+              // Replace the untouched row with the current row
+              return currentData[rowIndex]!;
+            }
+            return row;
+          }),
+        );
 
+        toast({
+          title: 'Saved!',
+          description: 'Your changes have been saved.',
+        });
+      },
+      saveAllRows: () => {
+        setUntouchedData(currentData);
+
+        toast({
+          title: 'Saved!',
+          description: 'Your changes have been saved.',
+        });
+      },
+      removeSingleRow: (rowIndex, dataId) => {
         // Delete from table
         setCurrentData((prev) =>
           prev.filter((_, index) => index !== parseInt(rowIndex)),
         );
       },
-      removeSelectedRows: (rowsIndexes, gamesIndexes) => {
+      removeSelectedRows: (rowsIndexes, dataIndexes) => {
         // Delete from table
         setCurrentData((prev) =>
           prev.filter((_, index) => !rowsIndexes.includes(index.toString())),
@@ -115,9 +166,9 @@ export function DataTable<TData, TValue>({
             <DropdownMenu>
               <DropdownMenuTrigger>Bulk Actions</DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>
+                <DropdownMenuItem>
                   <Dialog
-                    triggerLabel={'Delete'}
+                    triggerLabel={'Delete selected games'}
                     alertTitle={'Are you sur'}
                     alertMessage={'do you want to delete'}
                     actionFunction={() =>
@@ -128,7 +179,8 @@ export function DataTable<TData, TValue>({
                     }
                     isDisabled={table.getSelectedRowModel().rows.length === 0}
                   />
-                </DropdownMenuLabel>
+                </DropdownMenuItem>
+                <DropdownMenuItem>Export all as CSV</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

@@ -16,6 +16,7 @@ import {authenticator} from '~/services/auth.server';
 import {themeSessionResolver} from '~/services/session.server';
 import {PreventFlashOnWrongTheme, ThemeProvider, useTheme} from 'remix-themes';
 import {clsx} from 'clsx';
+import {Toaster} from '~/components/ui/toaster';
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{rel: 'stylesheet', href: cssBundleHref}] : []),
@@ -67,6 +68,7 @@ export function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        <Toaster />
       </body>
     </html>
   );

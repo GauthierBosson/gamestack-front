@@ -9,15 +9,44 @@ import {
 import {Button} from '~/components/ui/button';
 import {ArrowUpDown, ArrowUpRightSquare, MoreHorizontal} from 'lucide-react';
 import {Checkbox} from '~/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select';
+
+const gameStatus = {
+  BACKLOG: 'Backlog',
+  PLAYING: 'Playing',
+  ON_HOLD: 'On hold',
+  DONE: 'Done',
+  DROPPED: 'Dropped',
+} as const;
+
+const gameScores = {
+  NONE: '-',
+  ONE: '1',
+  TWO: '2',
+  THREE: '3',
+  FOUR: '4',
+  FIVE: '5',
+  SIX: '6',
+  SEVEN: '7',
+  HEIGHT: '8',
+  NINE: '9',
+  TEN: '10',
+} as const;
 
 export type Game = {
   id: string;
   picture: string;
   name: string;
-  status: 'to do' | 'doing' | 'on hold' | 'done' | 'dropped';
+  status: (typeof gameStatus)[keyof typeof gameStatus];
   type: string;
   platform: string;
-  score: number | '/';
+  score: (typeof gameScores)[keyof typeof gameScores];
   slug: string;
 };
 
@@ -58,6 +87,29 @@ export const columns: ColumnDef<Game>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
+    cell: ({row, table, column}) => (
+      <Select
+        onValueChange={(newStatus: Game['status']) => {
+          if (newStatus === row.original.status) return;
+
+          table.options.meta?.updateSingleColumn(
+            parseInt(row.id),
+            column.id,
+            newStatus,
+          );
+        }}>
+        <SelectTrigger className="w-[110px]">
+          <SelectValue placeholder={row.original.status} />
+        </SelectTrigger>
+        <SelectContent>
+          {Object.values(gameStatus).map((status) => (
+            <SelectItem key={status} value={status}>
+              {status}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    ),
   },
   {
     accessorKey: 'type',
@@ -70,11 +122,38 @@ export const columns: ColumnDef<Game>[] = [
   {
     accessorKey: 'score',
     header: 'Score',
+    cell: ({row, table, column}) => (
+      <Select
+        onValueChange={(newScore: Game['score']) => {
+          if (newScore === row.original.score) return;
+
+          table.options.meta?.updateSingleColumn(
+            parseInt(row.id),
+            column.id,
+            newScore,
+          );
+        }}>
+        <SelectTrigger className="w-[60px]">
+          <SelectValue placeholder={row.original.score} />
+        </SelectTrigger>
+        <SelectContent>
+          {Object.values(gameScores).map((score) => (
+            <SelectItem key={score} value={score.toString()}>
+              {score}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    ),
   },
   {
     id: 'actions',
     cell: ({row, table}) => {
       const game = row.original;
+      const rowId = parseInt(row.id);
+      const isEdited =
+        table.options.meta?.currentData[rowId] !==
+        table.options.meta?.untouchedData[rowId];
 
       return (
         <DropdownMenu>
@@ -96,10 +175,12 @@ export const columns: ColumnDef<Game>[] = [
               }>
               Delete
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => table.options.meta?.editRow(row.id)}>
-              Edit
-            </DropdownMenuItem>
+            {isEdited && (
+              <DropdownMenuItem
+                onClick={() => table.options.meta?.saveSingleRow(rowId)}>
+                Save changes
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );
