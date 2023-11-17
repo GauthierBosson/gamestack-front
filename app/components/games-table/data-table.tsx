@@ -49,6 +49,7 @@ declare module '@tanstack/react-table' {
     ) => void;
     saveSingleRow: (rowIndex: number) => void;
     saveAllRows: () => void;
+    discardAllChanges: () => void;
     removeSingleRow: (rowIndex: string, dataId: string) => void;
     removeSelectedRows: (rowsIndexes: string[], dataIndexes: string[]) => void;
   }
@@ -127,6 +128,14 @@ export function DataTable<TData, TValue>({
           description: 'Your changes have been saved.',
         });
       },
+      discardAllChanges: () => {
+        setCurrentData(untouchedData);
+
+        toast({
+          title: 'Discarded',
+          description: 'Your changes have been discarded.',
+        });
+      },
       removeSingleRow: (rowIndex, dataId) => {
         // Delete from table
         setCurrentData((prev) =>
@@ -162,7 +171,17 @@ export function DataTable<TData, TValue>({
               }
             />
           </div>
-          <div>
+          <div className={'flex gap-1'}>
+            <Button
+              className={'bg-green-600'}
+              onClick={() => table.options.meta!.saveAllRows()}>
+              Save all changes
+            </Button>
+            {/*<Button*/}
+            {/*  variant={'destructive'}*/}
+            {/*  onClick={}>*/}
+            {/*  Discard all changes*/}
+            {/*</Button>*/}
             <DropdownMenu>
               <DropdownMenuTrigger>Bulk Actions</DropdownMenuTrigger>
               <DropdownMenuContent>

@@ -66,7 +66,7 @@ export const columns: ColumnDef<Game>[] = [
     cell: ({row}) => {
       const game = row.original;
 
-      return <img width={70} src={game.picture} alt="game" />;
+      return <img width={70} src={game.picture} alt={`${game.name} cover`} />;
     },
   },
   {
@@ -82,12 +82,14 @@ export const columns: ColumnDef<Game>[] = [
       );
     },
     cell: ({row}) => (
-      <div className={'flex items-center gap-2'}>
-        <span>{row.original.name}</span>
-        <a href={`/games/${row.original.slug}`}>
+      <Button asChild variant={'link'}>
+        <a
+          className={'flex items-center gap-2'}
+          href={`/games/${row.original.slug}`}>
+          <span>{row.original.name}</span>
           <ArrowUpRightSquare className={'w-[14px]'} />
         </a>
-      </div>
+      </Button>
     ),
   },
   {
