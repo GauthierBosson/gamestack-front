@@ -7,7 +7,12 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import {Button} from '~/components/ui/button';
-import {ArrowUpDown, ArrowUpRightSquare, MoreHorizontal} from 'lucide-react';
+import {
+  ArrowDownToLine,
+  ArrowUpDown,
+  ArrowUpRightSquare,
+  MoreHorizontal,
+} from 'lucide-react';
 import {Checkbox} from '~/components/ui/checkbox';
 import {
   Select,
@@ -16,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
+import {AnimatePresence, motion} from 'framer-motion';
 
 const gameStatus = {
   BACKLOG: 'Backlog',
@@ -152,37 +158,47 @@ export const columns: ColumnDef<Game>[] = [
       const game = row.original;
       const rowId = parseInt(row.id);
       const isEdited =
-        table.options.meta?.currentData[rowId] !==
-        table.options.meta?.untouchedData[rowId];
+        JSON.stringify(table.options.meta?.currentData[rowId]) !==
+        JSON.stringify(table.options.meta?.untouchedData[rowId]);
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(game.id)}>
-              Copy game ID
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                table.options.meta?.removeSingleRow(row.id, game.id)
-              }>
-              Delete
-            </DropdownMenuItem>
-            {isEdited && (
+        <div className={'flex items-center gap-2 min-w-[40px]'}>
+          <div className={'w-[24px] inline-block'}>
+            <AnimatePresence>
+              {isEdited && (
+                <motion.button
+                  initial={{
+                    opacity: 0,
+                    scale: 0,
+                  }}
+                  animate={{opacity: 1, scale: 1}}
+                  exit={{opacity: 0, scale: 0}}
+                  children={
+                    <ArrowDownToLine className={'stroke-green-600 w-[20px]'} />
+                  }
+                  onClick={() => table.options.meta?.saveSingleRow(rowId)}
+                />
+              )}
+            </AnimatePresence>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => table.options.meta?.saveSingleRow(rowId)}>
-                Save changes
+                onClick={() =>
+                  table.options.meta?.removeSingleRow(row.id, game.id)
+                }>
+                Delete
               </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       );
     },
   },
