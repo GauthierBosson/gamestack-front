@@ -163,21 +163,31 @@ export const columns: ColumnDef<Game>[] = [
 
       return (
         <div className={'flex items-center gap-2 min-w-[40px]'}>
-          <div className={'w-[24px] inline-block'}>
+          <div className={'w-[20px] inline-block'}>
             <AnimatePresence>
               {isEdited && (
-                <motion.button
-                  initial={{
-                    opacity: 0,
-                    scale: 0,
-                  }}
-                  animate={{opacity: 1, scale: 1}}
-                  exit={{opacity: 0, scale: 0}}
-                  children={
-                    <ArrowDownToLine className={'stroke-green-600 w-[20px]'} />
-                  }
-                  onClick={() => table.options.meta?.saveSingleRow(rowId)}
-                />
+                <>
+                  <span className="sr-only">Save your changes</span>
+                  <motion.button
+                    initial={{
+                      opacity: 0,
+                      scale: 0,
+                    }}
+                    animate={{opacity: 1, scale: 1}}
+                    exit={{opacity: 0, scale: 0}}
+                    children={
+                      <span className={'relative flex h-5 w-5'}>
+                        <ArrowDownToLine className="animate-ping absolute inline-flex h-full w-full stroke-green-600 opacity-70" />
+                        <ArrowDownToLine
+                          className={
+                            'relative inline-flex stroke-green-600 h-5 w-5'
+                          }
+                        />
+                      </span>
+                    }
+                    onClick={() => table.options.meta?.saveSingleRow(rowId)}
+                  />
+                </>
               )}
             </AnimatePresence>
           </div>
