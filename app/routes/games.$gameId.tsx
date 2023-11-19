@@ -1,18 +1,27 @@
+import type {LoaderFunctionArgs} from '@remix-run/node';
 import {json} from '@remix-run/node';
 import {Outlet, useLoaderData} from '@remix-run/react';
-import {Heart, MoveRight} from 'lucide-react';
+import {Heart} from 'lucide-react';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '~/components/ui/tabs';
-import {Button} from '~/components/ui/button';
-import ArticleCard from '~/components/article-card';
-import {Card, CardContent} from '~/components/ui/card';
+import {useState} from 'react';
 
-export const loader = async ({params}) => {
-  return json({id: params.gameId});
-};
+type TabId = 'overview' | 'discussions' | 'reviews' | 'stats';
+
+export async function loader({params, request}: LoaderFunctionArgs) {
+  const id = params.gameId;
+  let currentTab: TabId = 'overview';
+  const url = new URL(request.url);
+
+  if (url.pathname.includes('discussions')) currentTab = 'discussions';
+  if (url.pathname.includes('reviews')) currentTab = 'reviews';
+  if (url.pathname.includes('stats')) currentTab = 'stats';
+
+  return json({id, currentTab});
+}
 
 export default function Game() {
-  const {id} = useLoaderData<typeof loader>();
-  console.log(id);
+  const {id, currentTab} = useLoaderData<typeof loader>();
+  const [tabId, setTabId] = useState<TabId>(currentTab);
 
   return (
     <>
@@ -49,98 +58,59 @@ export default function Game() {
         </div>
       </section>
       <section className={'container mx-auto py-14'}>
-        <Outlet />
-        <Tabs defaultValue={'overview'} className={'space-y-8'}>
+        <Tabs defaultValue={'overview'} value={tabId} className={'space-y-8'}>
           <TabsList className={'flex justify-center'}>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="social">Discussion</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews</TabsTrigger>
-            <TabsTrigger value="stats">Stats</TabsTrigger>
+            <TabsTrigger
+              value="overview"
+              onClick={() => {
+                setTabId('overview');
+                history.pushState(null, '', 'overview');
+              }}>
+              Overview
+            </TabsTrigger>
+            <TabsTrigger
+              value="discussions"
+              onClick={() => {
+                setTabId('discussions');
+                history.pushState(null, '', 'discussions');
+              }}>
+              Discussion
+            </TabsTrigger>
+            <TabsTrigger
+              value="reviews"
+              onClick={() => {
+                setTabId('reviews');
+                history.pushState(null, '', 'reviews');
+              }}>
+              Reviews
+            </TabsTrigger>
+            <TabsTrigger
+              value="stats"
+              onClick={() => {
+                setTabId('stats');
+                history.pushState(null, '', 'stats');
+              }}>
+              Stats
+            </TabsTrigger>
           </TabsList>
           <TabsContent value={'overview'}>
-            <section className={'space-y-4'}>
-              <div className={'space-y-4'}>
-                <div className={'flex justify-between items-center'}>
-                  <h2>Latest news</h2>
-                  <Button asChild variant={'link'}>
-                    <a href="#">
-                      See all related news &nbsp;
-                      <span>
-                        <MoveRight />
-                      </span>
-                    </a>
-                  </Button>
-                </div>
-
-                <div className={'grid grid-cols-5 gap-4'}>
-                  <ArticleCard
-                    title={'Judgement game is amazingly good'}
-                    picture={'/judgment_cover.jpg'}
-                    date={'12/12/2023'}
-                    author={'Gauthier'}
-                  />
-                  <ArticleCard
-                    title={'Judgement game is amazingly good'}
-                    picture={'/judgment_cover.jpg'}
-                    date={'12/12/2023'}
-                    author={'Gauthier'}
-                  />
-                  <ArticleCard
-                    title={'Judgement game is amazingly good'}
-                    picture={'/judgment_cover.jpg'}
-                    date={'12/12/2023'}
-                    author={'Gauthier'}
-                  />
-                  <ArticleCard
-                    title={'Judgement game is amazingly good'}
-                    picture={'/judgment_cover.jpg'}
-                    date={'12/12/2023'}
-                    author={'Gauthier'}
-                  />
-                  <ArticleCard
-                    title={'Judgement game is amazingly good'}
-                    picture={'/judgment_cover.jpg'}
-                    date={'12/12/2023'}
-                    author={'Gauthier'}
-                  />
-                </div>
-              </div>
-              <div>
-                <h2>Screenshots</h2>
-              </div>
-              <div>
-                <h2>Videos</h2>
-              </div>
-              <div>
-                <h2>Buy</h2>
-              </div>
-              <div>
-                <h2>You may also like</h2>
-              </div>
-              {/*<div>*/}
-              {/*  <h2>Related articles</h2>*/}
-              {/*</div>*/}
-            </section>
+            <Outlet />
           </TabsContent>
-          <TabsContent value={'social'}>
+          <TabsContent value={'discussions'}>
             <section className={'space-y-4'}>
               <h2>Discussions</h2>
-              <div>
-                <article className={'w-full'}>
-                  <Card>
-                    <CardContent className={'grow'}></CardContent>
-                  </Card>
-                </article>
-              </div>
+              <Outlet />
             </section>
           </TabsContent>
           <TabsContent value={'reviews'}>
             <section>
               <h2>Reviews</h2>
+              <Outlet />
             </section>
           </TabsContent>
           <TabsContent value={'stats'}>
-            <section></section>
+            <h2>Stats</h2>
+            <Outlet />
           </TabsContent>
         </Tabs>
       </section>
