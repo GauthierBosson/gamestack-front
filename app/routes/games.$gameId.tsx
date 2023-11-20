@@ -1,10 +1,9 @@
-import type {LoaderFunctionArgs} from '@remix-run/node';
+import type {ActionFunctionArgs, LoaderFunctionArgs} from '@remix-run/node';
 import {json} from '@remix-run/node';
 import {Link, Outlet, useLoaderData} from '@remix-run/react';
-import {Heart} from 'lucide-react';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '~/components/ui/tabs';
 import {useState} from 'react';
-import {Button} from '~/components/ui/button';
+import AddGame from '~/components/add-game';
 
 type TabId = 'overview' | 'discussions' | 'reviews' | 'stats';
 
@@ -37,12 +36,7 @@ export default function Game() {
           <img width={200} src="/judgment_cover.jpg" alt="Judgment cover" />
           <div>Recommended at 98%</div>
           <div>100 000 players</div>
-          <div className={'flex justify-between items-center'}>
-            <Button variant={'outline'}>Add to list</Button>
-            <Button variant={'ghost'}>
-              <Heart />
-            </Button>
-          </div>
+          <AddGame />
         </div>
         <div className={'py-4'}>
           <p>
@@ -100,4 +94,10 @@ export default function Game() {
       </section>
     </>
   );
+}
+
+export async function action({request}: ActionFunctionArgs) {
+  console.log('here');
+
+  return null;
 }

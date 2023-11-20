@@ -23,7 +23,7 @@ import {
 } from '~/components/ui/select';
 import {AnimatePresence, motion} from 'framer-motion';
 
-const gameStatus = {
+export const gameStatus = {
   BACKLOG: 'Backlog',
   PLAYING: 'Playing',
   ON_HOLD: 'On hold',
@@ -31,7 +31,7 @@ const gameStatus = {
   DROPPED: 'Dropped',
 } as const;
 
-const gameScores = {
+export const gameScores = {
   NONE: '-',
   ONE: '1',
   TWO: '2',
