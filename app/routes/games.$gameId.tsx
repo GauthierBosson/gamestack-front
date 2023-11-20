@@ -4,6 +4,7 @@ import {Link, Outlet, useLoaderData} from '@remix-run/react';
 import {Heart} from 'lucide-react';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '~/components/ui/tabs';
 import {useState} from 'react';
+import {Button} from '~/components/ui/button';
 
 type TabId = 'overview' | 'discussions' | 'reviews' | 'stats';
 
@@ -36,11 +37,11 @@ export default function Game() {
           <img width={200} src="/judgment_cover.jpg" alt="Judgment cover" />
           <div>Recommended at 98%</div>
           <div>100 000 players</div>
-          <div className={'flex justify-evenly'}>
-            <span>Add to list</span>
-            <span>
+          <div className={'flex justify-between items-center'}>
+            <Button variant={'outline'}>Add to list</Button>
+            <Button variant={'ghost'}>
               <Heart />
-            </span>
+            </Button>
           </div>
         </div>
         <div className={'py-4'}>
