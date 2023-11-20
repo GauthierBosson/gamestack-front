@@ -1,3 +1,3 @@
 export default function GameStats() {
-  return <h1>Game stats</h1>;
+  return <h2>Game stats</h2>;
 }

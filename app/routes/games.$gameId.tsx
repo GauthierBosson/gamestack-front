@@ -1,6 +1,6 @@
 import type {LoaderFunctionArgs} from '@remix-run/node';
 import {json} from '@remix-run/node';
-import {Outlet, useLoaderData} from '@remix-run/react';
+import {Link, Outlet, useLoaderData} from '@remix-run/react';
 import {Heart} from 'lucide-react';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '~/components/ui/tabs';
 import {useState} from 'react';
@@ -57,60 +57,43 @@ export default function Game() {
           </p>
         </div>
       </section>
+      {/* TODO: Seems like there is bug when you change link too fast, it doesnt change component */}
       <section className={'container mx-auto py-14'}>
-        <Tabs defaultValue={'overview'} value={tabId} className={'space-y-8'}>
+        <Tabs value={tabId} className={'space-y-8'}>
           <TabsList className={'flex justify-center'}>
             <TabsTrigger
               value="overview"
               onClick={() => {
                 setTabId('overview');
-                history.pushState(null, '', 'overview');
               }}>
-              Overview
+              <Link to={'overview'}>Overview</Link>
             </TabsTrigger>
             <TabsTrigger
               value="discussions"
               onClick={() => {
                 setTabId('discussions');
-                history.pushState(null, '', 'discussions');
               }}>
-              Discussion
+              <Link to={'discussions'}>Discussions</Link>
             </TabsTrigger>
             <TabsTrigger
               value="reviews"
               onClick={() => {
                 setTabId('reviews');
-                history.pushState(null, '', 'reviews');
               }}>
-              Reviews
+              <Link to={'reviews'}>Reviews</Link>
             </TabsTrigger>
             <TabsTrigger
               value="stats"
               onClick={() => {
                 setTabId('stats');
-                history.pushState(null, '', 'stats');
               }}>
-              Stats
+              <Link to={'stats'}>Stats</Link>
             </TabsTrigger>
           </TabsList>
-          <TabsContent value={'overview'}>
-            <Outlet />
-          </TabsContent>
-          <TabsContent value={'discussions'}>
+          <TabsContent value={tabId}>
             <section className={'space-y-4'}>
-              <h2>Discussions</h2>
               <Outlet />
             </section>
-          </TabsContent>
-          <TabsContent value={'reviews'}>
-            <section>
-              <h2>Reviews</h2>
-              <Outlet />
-            </section>
-          </TabsContent>
-          <TabsContent value={'stats'}>
-            <h2>Stats</h2>
-            <Outlet />
           </TabsContent>
         </Tabs>
       </section>

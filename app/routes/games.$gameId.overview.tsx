@@ -4,7 +4,7 @@ import ArticleCard from '~/components/article-card';
 
 export default function GameOverview() {
   return (
-    <section className={'space-y-4'}>
+    <>
       <div className={'space-y-4'}>
         <div className={'flex justify-between items-center'}>
           <h2>Latest news</h2>
@@ -66,6 +66,6 @@ export default function GameOverview() {
       {/*<div>*/}
       {/*  <h2>Related articles</h2>*/}
       {/*</div>*/}
-    </section>
+    </>
   );
 }
