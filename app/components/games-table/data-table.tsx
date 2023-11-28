@@ -31,6 +31,7 @@ import {
 import Dialog from '~/components/dialog';
 import type {RowData} from '@tanstack/table-core';
 import {useToast} from '~/components/ui/use-toast';
+import {CSVLink} from 'react-csv';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -156,6 +157,7 @@ export function DataTable<TData, TValue>({
     debugTable: true,
   });
 
+  // @ts-ignore
   return (
     <>
       <div>
@@ -199,7 +201,13 @@ export function DataTable<TData, TValue>({
                     isDisabled={table.getSelectedRowModel().rows.length === 0}
                   />
                 </DropdownMenuItem>
-                <DropdownMenuItem>Export all as CSV</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CSVLink
+                    data={untouchedData as object[]}
+                    filename={'gamestack_export.csv'}>
+                    Export to CSV
+                  </CSVLink>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
