@@ -1,6 +1,7 @@
 import {Button} from '~/components/ui/button';
 import {MoveRight} from 'lucide-react';
 import ArticleCard from '~/components/article-card';
+import Lightbox from '~/components/lightbox/lightbox';
 
 export default function GameOverview() {
   return (
@@ -53,6 +54,7 @@ export default function GameOverview() {
       </div>
       <div>
         <h2>Screenshots</h2>
+        <Lightbox pictures={['/judgment_banner.jpeg', '/judgment_cover.jpg']} />
       </div>
       <div>
         <h2>Videos</h2>
